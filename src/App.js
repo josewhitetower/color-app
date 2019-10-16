@@ -1,10 +1,14 @@
 import React from 'react';
-import Pallete from './components/Pallete';
+import Palette from './components/Palette';
 import seedColors from './seedColors'
+import {generatePalette} from './helpers/colorHelpers'
+
 function App() {
+  console.log(generatePalette(seedColors[2]));
+
   return (
     <div className="App">
-      <Pallete {...seedColors[5]}/>
+      <Palette {...seedColors[5]}/>
     </div>
   );
 }
