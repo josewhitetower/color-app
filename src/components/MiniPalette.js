@@ -4,10 +4,10 @@ import { withStyles } from "@material-ui/styles";
 const styles = {
   root: {
     backgroundColor: "white",
-    borderRadius: "5px",
     border: "1px solid black",
+    borderRadius: "5px",
     padding: "0.5rem",
-    position: "absolute",
+    position: "relative",
     overflow: "hidden",
     "&:hover": {
       cursor: "pointer"
@@ -34,6 +34,8 @@ const styles = {
 
 function MiniPalette(props) {
   const { classes, paletteName, emoji } = props;
+  console.log(classes);
+
   return (
     <div className={classes.root}>
       <div className={classes.colors} />
