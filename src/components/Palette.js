@@ -14,13 +14,15 @@ export default class Palette extends Component {
   changeFormat = format => this.setState({ format });
 
   render() {
-    const { colors, paletteName, emoji } = this.props.palette;
+    const { colors, paletteName, emoji, id } = this.props.palette;
     const colorBoxes = colors[this.state.level].map(color => {
       return (
         <ColorBox
           background={color[this.state.format]}
           name={color.name}
           key={color.id}
+          colorId={color.id}
+          paletteId={id}
         />
       );
     });
