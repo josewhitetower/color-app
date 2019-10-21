@@ -31,7 +31,7 @@ export default class Palette extends Component {
     return (
       <div className="Palette">
         <Navbar
-          level={this.props.level}
+          level={this.state.level}
           changeLevel={this.changeLevel}
           handleChange={this.changeFormat}
           showLevel
