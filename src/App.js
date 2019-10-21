@@ -11,6 +11,20 @@ function App() {
     return seedColors.find(palette => palette.id === id);
   }
 
+  function gatherShades(colorId, paletteId) {
+    const palette = generatePalette(findPalett(paletteId));
+    let shades = [];
+    for (const key in palette.colors) {
+      const color = palette.colors[key].find(color => color.id === colorId);
+      shades.push(color);
+    }
+    // Object.keys(palette.colors).forEach(key => {
+    //   const color = palette.colors[key].find(color => color.id === colorId);
+    //   shades.push(color);
+    // });
+    return shades.slice(1);
+  }
+
   return (
     <div className="App">
       <Switch>
@@ -37,6 +51,10 @@ function App() {
               colorId={routeProps.match.params.colorId}
               palette={generatePalette(
                 findPalett(routeProps.match.params.paletteId)
+              )}
+              shades={gatherShades(
+                routeProps.match.params.colorId,
+                routeProps.match.params.paletteId
               )}
             />
           )}
