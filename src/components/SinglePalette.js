@@ -24,7 +24,6 @@ export default class SinglePalette extends Component {
     return shades;
   };
   render() {
-    const { palette } = this.props;
     const coloBoxes = this.state.shades.map(color => (
       <ColorBox
         background={color.hex}
