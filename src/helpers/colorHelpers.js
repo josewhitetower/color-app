@@ -25,7 +25,7 @@
 //   ]
 // }
 
-import chroma from 'chroma-js'
+import chroma from "chroma-js";
 const levels = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
 function generatePalette(starterPalette) {
@@ -39,7 +39,7 @@ function generatePalette(starterPalette) {
     newPalette.colors[level] = [];
   }
   for (let color of starterPalette.colors) {
-    let scale = getScale(color.color, 10).reverse();
+    let scale = getScale(color.color, 10);
     for (let i in scale) {
       newPalette.colors[levels[i]].push({
         name: `${color.name} ${levels[i]}`,
@@ -66,11 +66,11 @@ function getRange(hexColor) {
   ];
 }
 
- function getScale(hexColor, numberOfColors) {
+function getScale(hexColor, numberOfColors) {
   return chroma
     .scale(getRange(hexColor))
     .mode("lab")
     .colors(numberOfColors);
 }
 
- export { generatePalette };
+export { generatePalette };
