@@ -74,7 +74,7 @@ class SinglePalette extends Component {
         <div className={classes.colors}>
           {coloBoxes}
           <div className={classes.goBack}>
-            <Link to={`/palette/${id}`} className="back-button">
+            <Link to={`/palette/${id}`}>
               GO BACK
             </Link>
           </div>
