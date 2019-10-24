@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Palette from "./components/Palette";
 import PaletteList from "./components/PaletteList";
+import NewPaletteForm from "./components/NewPaletteForm";
 import SinglePalette from "./components/SinglePalette";
 import seedColors from "./seedColors";
 import { generatePalette } from "./helpers/colorHelpers";
@@ -28,6 +29,8 @@ function App() {
   return (
     <div className="App">
       <Switch>
+        {/* order matters here */}
+        <Route exact path="/palette/new" render={() => <NewPaletteForm />} />
         <Route
           exact
           path="/"
