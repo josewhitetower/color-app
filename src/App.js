@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <Switch>
         {/* order matters here */}
-        <Route exact path="/palette/new" render={(routeProps) => <NewPaletteForm savePalette={savePalette} {...routeProps} />} />
+        <Route exact path="/palette/new" render={(routeProps) => <NewPaletteForm savePalette={savePalette} {...routeProps} palettes={palettes}/>} />
         <Route
           exact
           path="/"
