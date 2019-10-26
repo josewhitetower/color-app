@@ -13,7 +13,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { ChromePicker } from "react-color";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import DraggableColorBox from "./DraggableColorBox";
+import DraggableColorList from "./DraggableColorList";
+import arrayMove from "array-move";
+
+//import { arrayMove } from "react-sortable-hoc";
+
 const drawerWidth = 400;
 
 const useStyles = makeStyles(theme => ({
@@ -119,7 +123,7 @@ export default function PersistentDrawerLeft(props) {
     setNewColorName("");
   };
 
-  const deleteColor = colorName => {
+  const removeColor = colorName => {
     setColorList(colors.filter(color => color.name !== colorName));
   };
 
@@ -129,6 +133,10 @@ export default function PersistentDrawerLeft(props) {
 
   const handleOnPaletteNameChange = e => {
     setNewPaletteName(e.target.value);
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setColorList(arrayMove(colors, oldIndex, newIndex));
   };
 
   const handleSubmit = () => {
@@ -235,13 +243,12 @@ export default function PersistentDrawerLeft(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {colors.map(color => (
-          <DraggableColorBox
-            color={color}
-            key={color.name}
-            deleteColor={deleteColor}
-          />
-        ))}
+        <DraggableColorList
+          colors={colors}
+          removeColor={removeColor}
+          axis="xy"
+          onSortEnd={onSortEnd}
+        />
       </main>
     </div>
   );
