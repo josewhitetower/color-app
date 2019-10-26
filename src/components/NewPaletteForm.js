@@ -119,6 +119,10 @@ export default function PersistentDrawerLeft(props) {
     setNewColorName("");
   };
 
+  const deleteColor = colorName => {
+    setColorList(colors.filter(color => color.name !== colorName));
+  };
+
   const handleOnChange = e => {
     setNewColorName(e.target.value);
   };
@@ -232,7 +236,11 @@ export default function PersistentDrawerLeft(props) {
       >
         <div className={classes.drawerHeader} />
         {colors.map(color => (
-          <DraggableColorBox color={color} key={color.name} />
+          <DraggableColorBox
+            color={color}
+            key={color.name}
+            deleteColor={deleteColor}
+          />
         ))}
       </main>
     </div>

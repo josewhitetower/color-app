@@ -33,12 +33,15 @@ const styles = {
     transition: "all 0.3s ease-in-out"
   }
 };
-function DraggableColorBox({ classes, color }) {
+function DraggableColorBox({ classes, color, deleteColor }) {
   return (
     <div className={classes.root} style={{ backgroundColor: color.color }}>
       <div className={classes.boxContent}>
         <span> {color.name}</span>
-        <DeleteIcon className={classes.delete} />
+        <DeleteIcon
+          className={classes.delete}
+          onClick={() => deleteColor(color.name)}
+        />
       </div>
     </div>
   );
