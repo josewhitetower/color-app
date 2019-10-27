@@ -77,16 +77,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PersistentDrawerLeft(props) {
+export default function PersistentDrawerLeft({
+  savePalette,
+  palettes,
+  history,
+  maxColors = 20
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [currentColor, setCurrentColor] = React.useState({
     color: "#F30606",
     name: "red"
   });
-  const [colors, setColorList] = React.useState([]);
+  const [colors, setColorList] = React.useState(palettes[0].colors);
   const [newColorName, setNewColorName] = React.useState("");
   const [newPaletteName, setNewPaletteName] = React.useState("");
+  const paletteIsFull = colors.length >= maxColors ? "true" : undefined;
 
   React.useEffect(() => {
     ValidatorForm.addValidationRule("isColorNameUnique", value =>
@@ -96,7 +102,7 @@ export default function PersistentDrawerLeft(props) {
       colors.every(({ color }) => color !== currentColor)
     );
     ValidatorForm.addValidationRule("isPaletteNameUnique", value =>
-      props.palettes.every(
+      palettes.every(
         ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
       )
     );
@@ -145,8 +151,24 @@ export default function PersistentDrawerLeft(props) {
       id: newPaletteName.toLowerCase().replace(/ /g, "-"),
       paletteName: newPaletteName
     };
-    props.savePalette(palette);
-    props.history.push("/");
+    savePalette(palette);
+    history.push("/");
+  };
+
+  const clearColors = () => {
+    setColorList([]);
+  };
+
+  const addRandomColor = () => {
+    //pick random color from existin palettes
+    const allColors = palettes.map(p => p.colors).flat();
+    const rand = Math.floor(Math.random() * allColors.length);
+    const colorAlreadyExists = colors.some(
+      color => color.name === allColors[rand].name
+    );
+    if (!colorAlreadyExists) {
+      setColorList([...colors, allColors[rand]]);
+    } else console.error("color exists", allColors[rand]);
   };
   return (
     <div className={classes.root}>
@@ -205,10 +227,15 @@ export default function PersistentDrawerLeft(props) {
         <Divider />
         <Typography variant="h4">Design your palette</Typography>
         <div>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={clearColors}>
             Clear palette
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={addRandomColor}
+            disabled={paletteIsFull}
+          >
             Random Color
           </Button>
         </div>
@@ -230,8 +257,13 @@ export default function PersistentDrawerLeft(props) {
           <Button
             variant="contained"
             color="primary"
-            style={{ backgroundColor: currentColor }}
+            style={{
+              backgroundColor: paletteIsFull
+                ? "rgba(0, 0, 0, 0.12)"
+                : currentColor
+            }}
             type="submit"
+            disabled={paletteIsFull}
           >
             Add Color
           </Button>

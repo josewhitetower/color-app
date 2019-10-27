@@ -28,15 +28,24 @@ function App() {
   }
 
   function savePalette(newPalette) {
-    setPalettes([...palettes, newPalette])
-    console.log(newPalette)
+    setPalettes([...palettes, newPalette]);
   }
 
   return (
     <div className="App">
       <Switch>
         {/* order matters here */}
-        <Route exact path="/palette/new" render={(routeProps) => <NewPaletteForm savePalette={savePalette} {...routeProps} palettes={palettes}/>} />
+        <Route
+          exact
+          path="/palette/new"
+          render={routeProps => (
+            <NewPaletteForm
+              savePalette={savePalette}
+              {...routeProps}
+              palettes={palettes}
+            />
+          )}
+        />
         <Route
           exact
           path="/"
