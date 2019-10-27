@@ -7,11 +7,10 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { ChromePicker } from "react-color";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import DraggableColorList from "./DraggableColorList";
 import arrayMove from "array-move";
 import PaletteFormNav from "./PaletteFormNav";
+import ColorPickerForm from "./ColorPickerForm";
 
 //import { arrayMove } from "react-sortable-hoc";
 
@@ -82,22 +81,8 @@ export default function PersistentDrawerLeft({
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [currentColor, setCurrentColor] = React.useState({
-    color: "#F30606",
-    name: "red"
-  });
   const [colors, setColorList] = React.useState(palettes[0].colors);
-  const [newColorName, setNewColorName] = React.useState("");
   const paletteIsFull = colors.length >= maxColors ? "true" : undefined;
-
-  React.useEffect(() => {
-    ValidatorForm.addValidationRule("isColorNameUnique", value =>
-      colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase())
-    );
-    ValidatorForm.addValidationRule("isColorUnique", () =>
-      colors.every(({ color }) => color !== currentColor)
-    );
-  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -107,25 +92,12 @@ export default function PersistentDrawerLeft({
     setOpen(false);
   };
 
-  const handleChangeComplete = newColor => {
-    setCurrentColor(newColor.hex);
-  };
-
-  const addNewColor = () => {
-    const newColor = {
-      name: newColorName,
-      color: currentColor
-    };
+  const addNewColor = newColor => {
     setColorList([...colors, newColor]);
-    setNewColorName("");
   };
 
   const removeColor = colorName => {
     setColorList(colors.filter(color => color.name !== colorName));
-  };
-
-  const handleOnChange = e => {
-    setNewColorName(e.target.value);
   };
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -196,35 +168,11 @@ export default function PersistentDrawerLeft({
             Random Color
           </Button>
         </div>
-        <ChromePicker
-          onChangeComplete={handleChangeComplete}
-          color={currentColor}
+        <ColorPickerForm
+          addNewColor={addNewColor}
+          paletteIsFull={paletteIsFull}
+          colors={colors}
         />
-        <ValidatorForm onSubmit={addNewColor}>
-          <TextValidator
-            value={newColorName}
-            onChange={handleOnChange}
-            validators={["required", "isColorNameUnique", "isColorUnique"]}
-            errorMessages={[
-              "This field is required",
-              "Color Name must be unique",
-              "Color alredy used"
-            ]}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            style={{
-              backgroundColor: paletteIsFull
-                ? "rgba(0, 0, 0, 0.12)"
-                : currentColor
-            }}
-            type="submit"
-            disabled={paletteIsFull}
-          >
-            Add Color
-          </Button>
-        </ValidatorForm>
       </Drawer>
       <main
         className={clsx(classes.content, {
