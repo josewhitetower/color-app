@@ -156,7 +156,12 @@ export default function PersistentDrawerLeft({
         <div className={classes.container}>
           <Typography variant="h4">Design your palette</Typography>
           <div className={classes.buttons}>
-            <Button variant="contained" color="secondary" onClick={clearColors}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={clearColors}
+              className={classes.button}
+            >
               Clear palette
             </Button>
             <Button
@@ -164,6 +169,7 @@ export default function PersistentDrawerLeft({
               color="primary"
               onClick={addRandomColor}
               disabled={paletteIsFull}
+              className={classes.button}
             >
               Random Color
             </Button>
