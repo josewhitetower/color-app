@@ -104,11 +104,12 @@ export default function PersistentDrawerLeft({
     setColorList(arrayMove(colors, oldIndex, newIndex));
   };
 
-  const handleSubmit = newPaletteName => {
+  const handleSubmit = newPalette => {
     const palette = {
       colors,
-      id: newPaletteName.toLowerCase().replace(/ /g, "-"),
-      paletteName: newPaletteName
+      id: newPalette.paletteName.toLowerCase().replace(/ /g, "-"),
+      paletteName: newPalette.paletteName,
+      emoji: newPalette.emoji
     };
     savePalette(palette);
     history.push("/");
