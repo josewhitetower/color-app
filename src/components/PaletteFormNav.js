@@ -55,9 +55,12 @@ function PaletteFormNav({
   const classes = useStyles();
   const [formShowing, setFormOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const showForm = () => {
     setFormOpen(true);
-};
+  };
+  const hideForm = () => {
+    setFormOpen(false);
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -92,13 +95,13 @@ function PaletteFormNav({
           >
             Go Back
           </Button>
-          <Button variant="contained" color="primary" onClick={handleClickOpen}
+          <Button variant="contained" color="primary" onClick={showForm}
           className={classes.button}>
             Save
           </Button>
         </div>
       </AppBar>
-      {formShowing && <PaletteMettaFrom palettes={palettes} handleSubmit={handleSubmit}/>}
+      {formShowing && <PaletteMettaFrom palettes={palettes} handleSubmit={handleSubmit} hideForm={hideForm}/>}
     </div>
   );
 }

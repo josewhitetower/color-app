@@ -6,8 +6,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import "emoji-mart/css/emoji-mart.css"
+import {Picker} from "emoji-mart";
 
-export default function PaletteMetaFrom({palettes, handleSubmit}) {
+export default function PaletteMetaFrom({palettes, handleSubmit, hideForm}) {
     const [open, setOpen] = React.useState(true);
     const [newPaletteName, setNewPaletteName] = React.useState("");
 
@@ -25,6 +27,7 @@ export default function PaletteMetaFrom({palettes, handleSubmit}) {
 
     const handleClose = () => {
         setOpen(false);
+        hideForm();
     };
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -34,18 +37,19 @@ export default function PaletteMetaFrom({palettes, handleSubmit}) {
                 <DialogContentText>
                     Please enter a unique name for palette
                     </DialogContentText>
-                        <TextValidator
-                        value={newPaletteName}
-                        label="Palette Name"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleOnPaletteNameChange}
-                        validators={["required", "isPaletteNameUnique"]}
-                        errorMessages={[
-                            "Enter Palette Name",
-                            "Palette Name must be unique"
-                        ]}
-                        />
+                    <Picker/>
+                    <TextValidator
+                    value={newPaletteName}
+                    label="Palette Name"
+                    fullWidth
+                    margin="normal"
+                    onChange={handleOnPaletteNameChange}
+                    validators={["required", "isPaletteNameUnique"]}
+                    errorMessages={[
+                        "Enter Palette Name",
+                        "Palette Name must be unique"
+                    ]}
+                    />
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={handleClose} color="primary">
