@@ -39,13 +39,12 @@ export default function PaletteMetaFrom({palettes, handleSubmit, hideForm}) {
         handleSubmit(palette);
     };
 
-
     return (
         <>
             <Dialog open={stage === "emoji"} onClose={handleClose}>
                 <Picker onSelect={savePalette} title="Pick a palette emoji..."/>
             </Dialog>
-            <Dialog open={stage==="name"} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog open={stage === "name"} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Choose a Palette Name</DialogTitle>
                 <ValidatorForm onSubmit={showEmojiPicker}>
                     <DialogContent>
@@ -53,16 +52,16 @@ export default function PaletteMetaFrom({palettes, handleSubmit, hideForm}) {
                         Please enter a unique name for palette
                         </DialogContentText>
                         <TextValidator
-                        value={newPaletteName}
-                        label="Palette Name"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleOnPaletteNameChange}
-                        validators={["required", "isPaletteNameUnique"]}
-                        errorMessages={[
-                            "Enter Palette Name",
-                            "Palette Name must be unique"
-                        ]}
+                            value={newPaletteName}
+                            label="Palette Name"
+                            fullWidth
+                            margin="normal"
+                            onChange={handleOnPaletteNameChange}
+                            validators={["required", "isPaletteNameUnique"]}
+                            errorMessages={[
+                                "Enter Palette Name",
+                                "Palette Name must be unique"
+                            ]}
                         />
                         </DialogContent>
                         <DialogActions>
